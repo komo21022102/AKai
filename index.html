@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AKai A/B 網頁款式切換</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f6fb;
+        --surface: rgba(255, 255, 255, 0.82);
+        --surface-strong: #ffffff;
+        --text: #182037;
+        --muted: #66708c;
+        --line: rgba(39, 55, 95, 0.14);
+        --brand: #4458b8;
+        --brand-strong: #263a96;
+        --shadow: 0 18px 48px rgba(40, 54, 96, 0.14);
+        --radius: 8px;
+        --control-h: 44px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family:
+          "Noto Sans TC",
+          "Microsoft JhengHei",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at 14% 8%,
+            rgba(197, 231, 136, 0.38),
+            transparent 26rem
+          ),
+          radial-gradient(
+            circle at 88% 12%,
+            rgba(105, 128, 205, 0.26),
+            transparent 30rem
+          ),
+          linear-gradient(180deg, #ffffff 0%, var(--bg) 38%, #eef2ff 100%);
+      }
+
+      .shell {
+        width: 100%;
+        margin: 0 auto;
+        padding: 18px 0 40px;
+      }
+
+      .switchbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 72px;
+        padding: 12px clamp(12px, 2.5vw, 36px);
+        backdrop-filter: blur(16px);
+      }
+
+      .brand {
+        display: grid;
+        gap: 2px;
+        min-width: 0;
+      }
+
+      .brand strong {
+        font-size: clamp(18px, 2.2vw, 26px);
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .brand span {
+        color: var(--muted);
+        font-size: clamp(12px, 1.6vw, 14px);
+        line-height: 1.5;
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(74px, 1fr));
+        gap: 4px;
+        min-width: 178px;
+        height: calc(var(--control-h) + 8px);
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: 0 8px 24px rgba(36, 47, 86, 0.08);
+      }
+
+      .tab {
+        appearance: none;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1;
+        transition:
+          background-color 180ms ease,
+          color 180ms ease,
+          box-shadow 180ms ease;
+      }
+
+      .tab:hover {
+        color: var(--brand-strong);
+        background: rgba(68, 88, 184, 0.08);
+      }
+
+      .tab:focus-visible {
+        outline: 3px solid rgba(68, 88, 184, 0.28);
+        outline-offset: 2px;
+      }
+
+      .tab[aria-selected="true"] {
+        color: #ffffff;
+        background: linear-gradient(180deg, var(--brand), var(--brand-strong));
+        box-shadow: 0 8px 18px rgba(55, 74, 174, 0.24);
+      }
+
+      .stage {
+        overflow: hidden;
+        width: 100%;
+        border: 1px solid rgba(39, 55, 95, 0.12);
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+        background: var(--surface-strong);
+        box-shadow: var(--shadow);
+      }
+
+      .panel {
+        display: none;
+        padding: 0;
+      }
+
+      .panel.is-active {
+        display: block;
+        animation: panel-in 220ms ease-out;
+      }
+
+      .page-shot {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        border-radius: 0;
+        background: #ffffff;
+      }
+
+      .caption {
+        display: flex;
+        justify-content: center;
+        padding: 12px 8px 2px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      @keyframes panel-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          padding: 10px 0 24px;
+        }
+
+        .switchbar {
+          min-height: auto;
+          align-items: stretch;
+          flex-direction: column;
+          padding: 10px 12px;
+          border-bottom: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.78);
+        }
+
+        .brand {
+          gap: 0;
+        }
+
+        .tabs {
+          width: 100%;
+        }
+
+        .stage {
+          box-shadow: none;
+        }
+
+        .caption {
+          padding: 10px 12px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .tab,
+        .panel.is-active {
+          transition: none;
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="switchbar" aria-label="款式切換">
+        <div class="brand">
+          <strong>AKai 網頁初稿</strong>
+          <!-- <span>切換 A / B 款，畫面會依裝置寬度自動縮放。</span> -->
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="選擇網頁款式">
+          <button
+            class="tab"
+            id="tab-a"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-a"
+            data-target="panel-a"
+          >
+            A 款
+          </button>
+          <button
+            class="tab"
+            id="tab-b"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-b"
+            data-target="panel-b"
+          >
+            B 款
+          </button>
+        </div>
+      </header>
+
+      <section class="stage">
+        <article
+          class="panel is-active"
+          id="panel-a"
+          role="tabpanel"
+          aria-labelledby="tab-a"
+        >
+          <img
+            class="page-shot"
+            src="ok1.jpg"
+            alt="AKai A 款網頁完整截圖"
+          />
+          <div class="caption">A 款</div>
+        </article>
+
+        <article
+          class="panel"
+          id="panel-b"
+          role="tabpanel"
+          aria-labelledby="tab-b"
+          hidden
+        >
+          <img
+            class="page-shot"
+            src="ok2.jpg"
+            alt="AKai B 款網頁完整截圖"
+          />
+          <div class="caption">B 款</div>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+      function activateTab(tab) {
+        tabs.forEach((item) => {
+          const isActive = item === tab;
+          item.setAttribute("aria-selected", String(isActive));
+          item.tabIndex = isActive ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          const isActive = panel.id === tab.dataset.target;
+          panel.classList.toggle("is-active", isActive);
+          panel.hidden = !isActive;
+        });
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activateTab(tab));
+        tab.addEventListener("keydown", (event) => {
+          const keyMap = {
+            ArrowLeft: index === 0 ? tabs.length - 1 : index - 1,
+            ArrowRight: index === tabs.length - 1 ? 0 : index + 1,
+            Home: 0,
+            End: tabs.length - 1,
+          };
+
+          if (event.key in keyMap) {
+            event.preventDefault();
+            const nextTab = tabs[keyMap[event.key]];
+            nextTab.focus();
+            activateTab(nextTab);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
