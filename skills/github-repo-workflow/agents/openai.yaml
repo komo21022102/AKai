@@ -1,0 +1,7 @@
+interface:
+  display_name: "GitHub Repo Workflow"
+  short_description: "Clone, commit, and push GitHub repos"
+  default_prompt: "Use $github-repo-workflow to clone a GitHub repo, inspect changes, commit progress, and push it safely."
+
+policy:
+  allow_implicit_invocation: true
