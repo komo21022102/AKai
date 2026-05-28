@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AKai A/B 網頁款式切換</title>
+    <title>AKai 網頁 / 手機初稿切換</title>
     <style>
       :root {
         color-scheme: light;
@@ -167,6 +167,10 @@
         background: #ffffff;
       }
 
+      .mobile-shot {
+        width: min(100%, 430px);
+      }
+
       .caption {
         display: flex;
         justify-content: center;
@@ -237,32 +241,31 @@
     <main class="shell">
       <header class="switchbar" aria-label="初稿">
         <div class="brand">
-          <strong>AKai 網頁初稿</strong>
-          <!-- <span>切換 A / B 款，畫面會依裝置寬度自動縮放。</span> -->
+          <strong>AKai 初稿</strong>
         </div>
 
         <div class="tabs" role="tablist" aria-label="初稿">
           <button
             class="tab"
-            id="tab-a"
+            id="tab-web"
             type="button"
             role="tab"
             aria-selected="true"
-            aria-controls="panel-a"
-            data-target="panel-a"
+            aria-controls="panel-web"
+            data-target="panel-web"
           >
-            A 款
+            網頁
           </button>
           <button
             class="tab"
-            id="tab-b"
+            id="tab-mobile"
             type="button"
             role="tab"
             aria-selected="false"
-            aria-controls="panel-b"
-            data-target="panel-b"
+            aria-controls="panel-mobile"
+            data-target="panel-mobile"
           >
-            B 款
+            手機
           </button>
         </div>
       </header>
@@ -270,23 +273,27 @@
       <section class="stage">
         <article
           class="panel is-active"
-          id="panel-a"
+          id="panel-web"
           role="tabpanel"
-          aria-labelledby="tab-a"
+          aria-labelledby="tab-web"
         >
-          <img class="page-shot" src="ok1.jpg" alt="AKai A 款網頁完整截圖" />
-          <div class="caption">A 款</div>
+          <img class="page-shot" src="ok2.jpg" alt="AKai 網頁版完整截圖" />
+          <div class="caption">網頁</div>
         </article>
 
         <article
           class="panel"
-          id="panel-b"
+          id="panel-mobile"
           role="tabpanel"
-          aria-labelledby="tab-b"
+          aria-labelledby="tab-mobile"
           hidden
         >
-          <img class="page-shot" src="ok2.jpg" alt="AKai B 款網頁完整截圖" />
-          <div class="caption">B 款</div>
+          <img
+            class="page-shot mobile-shot"
+            src="ok-mb.jpg"
+            alt="AKai 手機版完整截圖"
+          />
+          <div class="caption">手機</div>
         </article>
       </section>
     </main>
