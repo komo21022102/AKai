@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AKai 網頁 / 手機初稿切換</title>
+    <title>AKai 網頁 / 分頁 / 手機 / 手機menu 初稿切換</title>
     <style>
       :root {
         color-scheme: light;
@@ -93,7 +93,7 @@
 
       .tabs {
         display: grid;
-        grid-template-columns: repeat(2, minmax(74px, 1fr));
+        grid-template-columns: repeat(4, minmax(74px, 1fr));
         gap: 4px;
         min-width: 178px;
         height: calc(var(--control-h) + 8px);
@@ -258,6 +258,17 @@
           </button>
           <button
             class="tab"
+            id="tab-page"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-page"
+            data-target="panel-page"
+          >
+            分頁
+          </button>
+          <button
+            class="tab"
             id="tab-mobile"
             type="button"
             role="tab"
@@ -266,6 +277,17 @@
             data-target="panel-mobile"
           >
             手機
+          </button>
+          <button
+            class="tab"
+            id="tab-menu"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-menu"
+            data-target="panel-menu"
+          >
+            手機menu
           </button>
         </div>
       </header>
@@ -283,6 +305,17 @@
 
         <article
           class="panel"
+          id="panel-page"
+          role="tabpanel"
+          aria-labelledby="tab-page"
+          hidden
+        >
+          <img class="page-shot" src="ok3.jpg" alt="AKai 分頁完整截圖" />
+          <div class="caption">分頁</div>
+        </article>
+
+        <article
+          class="panel"
           id="panel-mobile"
           role="tabpanel"
           aria-labelledby="tab-mobile"
@@ -294,6 +327,21 @@
             alt="AKai 手機版完整截圖"
           />
           <div class="caption">手機</div>
+        </article>
+
+        <article
+          class="panel"
+          id="panel-menu"
+          role="tabpanel"
+          aria-labelledby="tab-menu"
+          hidden
+        >
+          <img
+            class="page-shot mobile-shot"
+            src="menu.jpg"
+            alt="AKai 手機 menu 完整截圖"
+          />
+          <div class="caption">手機menu</div>
         </article>
       </section>
     </main>
